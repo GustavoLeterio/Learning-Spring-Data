@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head th:replace="~{base :: head}"></head>
+
+<body>
+    <main class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">My Orders</h1>
+        </div>
+
+        <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3 px-4">
+            <div class="navbar-nav">
+                <a th:classappend="${status} == null ? 'active'" class="nav-item nav-link" href="/home">Orders</a>
+                <a class="nav-item nav-link" th:classappend="${status} == 'waiting' ? 'active'" href="/home/waiting">Waiting</a>
+                <a class="nav-item nav-link" th:classappend="${status} == 'approved' ? 'active'" href="/home/approved">Approved</a>
+                <a class="nav-item nav-link" th:classappend="${status} == 'delivered' ? 'active'" href="/home/delivered">Delivered</a>
+            </div>
+            <a href="/order/form">
+                <button class="btn btn-outline-secondary my-2 my-sm-0"> New </button>
+            </a>
+        </nav>
+        <div class="card" th:each="p : ${purchaseOrders}">
+            <th:block th:switch="${p.status.name()}">
+                <h3 th:case="'WAITING'"  class="card-header alert alert-warning" th:text="${p.getName()}">Product Name</h3>
+                <h3 th:case="'APPROVED'"  class="card-header alert alert-success" th:text="${p.getName()}">Product Name</h3>
+                <h3 th:case="'DELIVERED'"  class="card-header alert alert-dark" th:text="${p.getName()}">Product Name</h3>
+            </th:block >
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-sm-8">
+                        <div class="row">
+                            <span class="col-md-5">Value:
+                                <span th:text="${#numbers.formatCurrency(p.getValue())}" class="col-md-6">Product Value</span></span>
+                            <span class="col-md-7">Delivery Date:
+                                <span th:text="${#temporals.format(p.getDeliveryDate(),'dd/MM/yyyy')}">Delivery Date</span>
+                            </span>
+                        </div>
+                        <div>
+                            <span>Product:</span>
+                            <input class="form-control" th:value="${p.getUrl()}" value="Product Url" />
+                        </div>
+                        <div>
+                            <span>Description:</span>
+                            <textarea class="form-control" th:text="${p.getDescription()}">
+                                Product Description
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-4">
+                        <img class="img-thumbnail" th:src="${p.getImgUrl()}" alt="Product Image" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

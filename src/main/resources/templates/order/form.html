@@ -1,0 +1,65 @@
+<html>
+  <head th:replace="~{base :: head}"></head>
+
+  <body>
+    <div class="container">
+      <div class="jumbotron mb-0">
+        <h1 class="display-4">New Order</h1>
+      </div>
+      <div class="card mt-3">
+        <form
+          th:object="${purchaseOrderRequisition}"
+          action="/order/register"
+          class="card-body"
+          method="POST"
+        >
+          <div class="form-group mb-3">
+            <label for="name">Product</label>
+            <input
+              th:field="*{name}"
+              th:errorclass="is-invalid"
+              class="form-control"
+              placeholder="Product Name"
+            />
+            <div th:errors="*{name}" class="invalid-feedback">
+              Product name errors
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="url">URL</label>
+            <input
+              th:field="*{url}"
+              th:errorclass="is-invalid"
+              class="form-control"
+              placeholder="Product URL"
+            />
+            <div th:errors="*{url}" class="invalid-feedback">
+              Product url errors
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="imgUrl">Image</label>
+            <input
+              th:field="*{imgUrl}"
+              th:errorclass="is-invalid"
+              class="form-control"
+              placeholder="Image URL"
+            />
+            <div th:errors="*{imgUrl}" class="invalid-feedback">
+              Product image errors
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="description">Product Description</label>
+            <textarea
+              th:field="*{description}"
+              class="form-control"
+              placeholder="Product description"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
