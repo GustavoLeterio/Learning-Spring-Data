@@ -1,13 +1,14 @@
 package br.com.gustavoleterio.mvc.mudi.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.gustavoleterio.mvc.mudi.model.OrderStatus;
@@ -21,22 +22,13 @@ public class HomeController {
 	@Autowired
 	PurchaseOrderRepository repo;
 
+	Sort sortByDeliveredDate = Sort.by("deliveryDate").descending();
+
 	@GetMapping
-	public String home(Model model) {
-		List<PurchaseOrder> purchaseOrders = repo.findAll();
+	public String home(Model model, Principal principal) {
+		PageRequest page = PageRequest.of(0, 10, sortByDeliveredDate);	
+		List<PurchaseOrder> purchaseOrders = repo.findByStatus(OrderStatus.DELIVERED, page);
 		model.addAttribute("purchaseOrders", purchaseOrders);
 		return "home";
-	}
-
-	@GetMapping("/{status}")
-	public String waiting(@PathVariable("status") String status, Model model) {
-		List<PurchaseOrder> purchaseOrders = repo.findByStatus(OrderStatus.valueOf(status.toUpperCase()));
-		model.addAttribute("purchaseOrders", purchaseOrders);
-		return "/home";
-	}
-
-	@ExceptionHandler(IllegalArgumentException.class)
-	public String onError() {
-		return "redirect:/home";
 	}
 }

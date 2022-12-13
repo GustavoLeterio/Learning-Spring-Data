@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="~{base :: head('Login')}"></head>
+
+<body>
+	<header th:replace="~{base :: header}"></header>
+	<main class="container">
+		<div class="jumbotron mb-0">
+			<h1 class="display-4">Login</h1>
+		</div>
+		<div class="card mb-3">
+			<form th:action="@{/login}" class="card-body" method="post">
+				<div class="form-group mb-3">
+					<label for="username">Username</label>
+					<input name="username" type="text" class="form-control" placeholder="Username" />
+				</div>
+				<div class="form-group mb-3">
+					<label for="password">Product</label>
+					<input name="password" type="password" class="form-control" placeholder="Password" />
+				</div>
+				<div th:if="${param.error}">Invalid username and password.</div>
+				<div th:if="${param.logout}">You have been logged out.</div>
+				<input type="submit" value="Log in" class="btn btn-primary" />
+			</form>
+		</div>
+	</main>
+</body>
+
+</html>

@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-<head th:replace="~{base :: head('Last Orders')}"></head>
+<head th:replace="~{base :: head('My Orders')}"></head>
 
 <body>
     <header th:replace="~{base :: header}"></header>
     <main class="container">
         <div class="jumbotron mb-0">
-            <h1 class="display-4">Last Orders</h1>
-        </div>
-        <nav th:replace="~{base :: ordersFilters}" sec:authorize="isAuthenticated()"></nav>
+            <h1 class="display-4">My Orders</h1>
+          </div>
+        <nav th:replace="~{base :: ordersFilters}"></nav>
         <div class="card mt-3" th:each="p : ${purchaseOrders}">
-            <h3 class="card-header alert alert-dark" th:text="${p.getName()}">
-                Product Name
-            </h3>
+            <th:block th:switch="${p.status.name()}">
+                <h3 th:case="'WAITING'" class="card-header alert alert-warning" th:text="${p.getName()}">Product Name
+                </h3>
+                <h3 th:case="'APPROVED'" class="card-header alert alert-success" th:text="${p.getName()}">Product Name
+                </h3>
+                <h3 th:case="'DELIVERED'" class="card-header alert alert-dark" th:text="${p.getName()}">Product Name
+                </h3>
+            </th:block>
             <div class="card-body">
                 <div class="row">
                     <div class="col-12 col-sm-8">
