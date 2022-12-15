@@ -9,12 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 	@Id
 	private String username;
-	private String password;
+	@SuppressWarnings("unused")
+	private String password;	
+	@SuppressWarnings("unused")
 	private Boolean enabledBoolean;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.LAZY)
 	private List<PurchaseOrder> purchaseOrders;

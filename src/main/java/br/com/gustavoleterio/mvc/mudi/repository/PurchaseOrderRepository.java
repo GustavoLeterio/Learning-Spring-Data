@@ -16,7 +16,6 @@ import br.com.gustavoleterio.mvc.mudi.model.PurchaseOrder;
 public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Long> {
 	// Extending JpaRepository, we have a bunch of methods, as findAll and findById
 	
-	@Cacheable("ordersByStatus")
 	List<PurchaseOrder> findByStatus(OrderStatus status, Pageable pageable);
 
 	@Cacheable("ordersByUsers")

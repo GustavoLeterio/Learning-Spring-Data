@@ -22,12 +22,12 @@ public class HomeController {
 	@Autowired
 	PurchaseOrderRepository repo;
 
-	Sort sortByDeliveredDate = Sort.by("deliveryDate").descending();
+	Sort sortByDeliveryDate = Sort.by("id").descending();
+	PageRequest pagePattern = PageRequest.of(0, 10, sortByDeliveryDate);
 
 	@GetMapping
 	public String home(Model model, Principal principal) {
-		PageRequest page = PageRequest.of(0, 10, sortByDeliveredDate);	
-		List<PurchaseOrder> purchaseOrders = repo.findByStatus(OrderStatus.DELIVERED, page);
+		List<PurchaseOrder> purchaseOrders = repo.findByStatus(OrderStatus.DELIVERED, pagePattern);
 		model.addAttribute("purchaseOrders", purchaseOrders);
 		return "home";
 	}

@@ -2,6 +2,7 @@ package br.com.gustavoleterio.mvc.mudi.dto;
 
 import javax.validation.constraints.NotBlank;
 
+import br.com.gustavoleterio.mvc.mudi.model.Offer;
 import br.com.gustavoleterio.mvc.mudi.model.OrderStatus;
 import br.com.gustavoleterio.mvc.mudi.model.PurchaseOrder;
 

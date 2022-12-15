@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.gustavoleterio.mvc.mudi.dto.PurchaseOrderRequisition;
 import br.com.gustavoleterio.mvc.mudi.model.PurchaseOrder;
-import br.com.gustavoleterio.mvc.mudi.model.User;
 import br.com.gustavoleterio.mvc.mudi.repository.PurchaseOrderRepository;
 import br.com.gustavoleterio.mvc.mudi.repository.UserRepository;
 

@@ -33,6 +33,7 @@
 	<nav class="nav bg-light mb-3">
 		<a th:href="@{/home}" class="nav-link">Last Orders</a>
 		<a th:href="@{/user/orders}" class="nav-link" sec:authorize="isAuthenticated()">My Orders</a>
+		<a th:href="@{/offers}" class="nav-link" sec:authorize="isAuthenticated()">Make your Offer</a>
 	</nav>
 </div>
 

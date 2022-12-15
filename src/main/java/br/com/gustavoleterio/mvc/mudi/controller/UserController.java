@@ -23,15 +23,15 @@ public class UserController {
 
 	@Autowired
 	PurchaseOrderRepository repo;
-	Sort sortByDeliveredDate = Sort.by("deliveryDate").descending();
+	
+	Sort sortByDeliveryDate = Sort.by("deliveryDate").descending();
+	PageRequest pagePattern = PageRequest.of(0, 10, sortByDeliveryDate);
 
 	@GetMapping("/orders")
 	public String home(Model model, Principal principal) {
-		PageRequest page = PageRequest.of(0,10,sortByDeliveredDate);
-		
 		List<PurchaseOrder> purchaseOrders = repo.findByUser(
 					principal.getName(), 
-					page
+					pagePattern
 				);
 		
 		model.addAttribute("purchaseOrders", purchaseOrders);
@@ -40,12 +40,10 @@ public class UserController {
 
 	@GetMapping("/{status}")
 	public String byStatus(@PathVariable("status") String status, Model model, Principal principal) {
-		PageRequest page = PageRequest.of(0,10,sortByDeliveredDate);
-		
 		List<PurchaseOrder> purchaseOrders = repo.findByStatusAndUser(
 					principal.getName(),
 					OrderStatus.valueOf(status.toUpperCase()),
-					page
+					pagePattern
 				);
 		
 		model.addAttribute("purchaseOrders", purchaseOrders);

@@ -3,7 +3,9 @@ package br.com.gustavoleterio.mvc.mudi.model;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,14 +14,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class PurchaseOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long Id;
+	private Long id;
 
 	private String name;
 	private String description;
@@ -31,6 +36,9 @@ public class PurchaseOrder {
 	private OrderStatus status;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "purchaseOrder", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Offer> offers;
 	
 	public PurchaseOrder() {
 	}
@@ -43,6 +51,16 @@ public class PurchaseOrder {
 		this.deliveryDate = deliveryDate;
 		this.url = url;
 		this.imgUrl = imgUrl;
+	}
+
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -59,12 +77,6 @@ public class PurchaseOrder {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getFormatedValue() {
-		if (value != null)
-			return new DecimalFormat("#,##0.00").format(value);
-		return null;
 	}
 
 	public BigDecimal getValue() {
@@ -114,5 +126,14 @@ public class PurchaseOrder {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+	public List<Offer> getOffers() {
+		return offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		this.offers = offers;
+	}
 	
+
 }
